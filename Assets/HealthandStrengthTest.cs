@@ -9,6 +9,9 @@ public class HealthandStrengthTest : MonoBehaviour
         
     public CharacterStrength CharStrength;
 
+    public KeyCount keycount;
+
+
 
     void Update()
     {
@@ -20,6 +23,10 @@ public class HealthandStrengthTest : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.J)) {
             CharStrength.GetStrength(1);
+        }
+
+        if (Input.GetKey(KeyCode.M)) {
+            keycount.Collect(1);
         }
     }
 }
