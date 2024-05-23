@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerMovementTutorial : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
@@ -35,32 +35,43 @@ public class PlayerMovementTutorial : MonoBehaviour
 
     Rigidbody rb;
 
+    private bool move;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         readyToJump = true;
+        move = true;
     }
 
     private void Update()
     {
-        // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        if (move)
+        {
+             // ground check
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
-        MyInput();
-        SpeedControl();
+            MyInput();
+            SpeedControl();
 
-        // handle drag
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
+            // handle drag
+            if (grounded)
+                rb.drag = groundDrag;
+            else
+                rb.drag = 0;
+        }
+
+       
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if(move) 
+        {
+            MovePlayer();
+        }
     }
 
     private void MyInput()
@@ -115,5 +126,17 @@ public class PlayerMovementTutorial : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    public void StopMove()
+    {
+        move = false;
+        rb.velocity = new Vector3(0,0,0);
+        moveDirection = new Vector3(0,0,0);
+
+    }
+    public void StartMove()
+    {
+        move = true;
     }
 }

@@ -45,5 +45,11 @@ public class CharacterHealth : MonoBehaviour
 
     }
 
+    public int GetHealthCount()
+    {
+        return curHealth;
+
+    }
+
 
 }

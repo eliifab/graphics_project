@@ -29,5 +29,11 @@ public class CharacterStrength : MonoBehaviour
 
     }
 
+     public int GetStrengthCount()
+    {
+        return curStrength;
+
+    }
+
 
 }
