@@ -13,13 +13,15 @@ public class AIpatrol : MonoBehaviour
     //patrol
     Vector3 DestPoint;
     bool WalkpointSet;
-    [SerializeField] float range;
+    [SerializeField] float range, vision;
+    [SerializeField] bool chase;
+    bool playerSeen;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("Player");
+        player = GameObject.Find("PlayerObj");
         move = true;
     }
 
@@ -28,9 +30,17 @@ public class AIpatrol : MonoBehaviour
     {
         if(move)
         {
-            Patrol();
+            playerSeen = chase && Physics.CheckSphere(transform.position, vision, playerLayer);
+            
+            if (!playerSeen) Patrol();
+            if (playerSeen) Chase();
         }
    
+    }
+
+    void Chase()
+    {
+        agent.SetDestination(player.transform.position);
     }
 
     void Patrol()
@@ -53,6 +63,7 @@ public class AIpatrol : MonoBehaviour
         }
     }
 
+    
     public void SwitchMove(Transform trans)
     {
         move = !move;
@@ -62,4 +73,5 @@ public class AIpatrol : MonoBehaviour
         gameObject.transform.position = trans.position;
         agent.enabled = true;
     }
+    
 }

@@ -3359,7 +3359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 527465332}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5080,17 +5080,12 @@ PrefabInstance:
     - target: {fileID: 4862306644842536866, guid: 75f057b43e0a449dae5f6549f5107474,
         type: 3}
       propertyPath: m_Speed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862306644842536866, guid: 75f057b43e0a449dae5f6549f5107474,
-        type: 3}
-      propertyPath: m_Acceleration
-      value: 8
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 8070268304288189539, guid: 75f057b43e0a449dae5f6549f5107474,
         type: 3}
-      propertyPath: range
-      value: 15
+      propertyPath: chase
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8154923031194748583, guid: 75f057b43e0a449dae5f6549f5107474,
         type: 3}
