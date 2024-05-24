@@ -6,14 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class FightAnimation : MonoBehaviour
 {
+    public CameraSwitcher camswitch;
     public PlayerMovement Movement;
     private Animator Swarm08_Animator;
     public GameObject Character;
     public int AddStrengthAfterVictory;
-    public int AttackWeight;
+    public int EnemyStrength;
+    public GameObject NewPositionEnemy;
+    public GameObject NewPositionCharacter;
+    public TextArena textarena;
 
+    private Vector3  saveCharTf;
+    private Vector3  saveEnemyTf;
     private bool readyToChoose = true;
-    private float Cooldown = 0.2f;
+    private float Cooldown1 = 2.0f;
+    private float Cooldown2 = 3.0f;
+    private bool died = false;
+    private bool died2 = false;
+
 
 
     // Start is called before the first frame update
@@ -26,11 +36,17 @@ public class FightAnimation : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        //SceneManager.LoadScene("Arena");
-        //teleport
+        saveCharTf = collision.gameObject.transform.position;
+        saveEnemyTf = gameObject.transform.position;
+
         Movement.StopMove();
-        //gameObject.transform.Translate(10,0,0);
-        //collision.gameObject.transform.Translate(10,0,0);
+        camswitch.SwitchCamera();
+
+        AIpatrol patrol = gameObject.GetComponent<AIpatrol>();
+
+        patrol.SwitchMove(NewPositionEnemy.transform);
+        gameObject.transform.LookAt(NewPositionCharacter.transform.position);
+        collision.gameObject.transform.position = NewPositionCharacter.transform.position;
         
     }
     
@@ -48,33 +64,52 @@ public class FightAnimation : MonoBehaviour
 
                 if(Input.GetKeyDown(KeyCode.U))
                 {
-                    StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(8, 12), AttackWeight * Random.Range(8, 12))); // damage to enemy, damage to character
+                    StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(8, 12), EnemyStrength * Random.Range(8, 12))); // damage to enemy, damage to character
                 }
                 else if(Input.GetKeyDown(KeyCode.I))
                 {
-                    StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(5, 15), AttackWeight * Random.Range(8, 12))); // damage to enemy, damage to character
+                    StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(5, 15), EnemyStrength * Random.Range(8, 12))); // damage to enemy, damage to character
                 }
                 else if(Input.GetKeyDown(KeyCode.O))
                 {
-                    StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(1, 20), AttackWeight * Random.Range(8, 12))); // damage to enemy, damage to character
+                    StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(1, 20), EnemyStrength * Random.Range(8, 12))); // damage to enemy, damage to character
                 }
 
             }
 
             if(EnemyHealth.GetHealthCount() == 0)
             {
-                Swarm08_Animator.SetTrigger("Die");
 
-                // wait?
+                if (!died) 
+                {
+                    if(!died2)
+                    {
+                        died2 = true;
+                        Swarm08_Animator.SetTrigger("Die");
+                        CharacterStrength.GetStrength(AddStrengthAfterVictory);
+                    }
+       
+                     Invoke(nameof(WaitDie), Cooldown2);
+                }
 
-                this.GetComponent<Collider>().enabled = false;
+                else
+                {
+                    gameObject.SetActive(false);
 
-                CharacterStrength.GetStrength(AddStrengthAfterVictory);
 
-                Movement.StartMove();
+                    camswitch.SwitchCamera();
+
+               
+                    Character.gameObject.transform.position = saveCharTf;
+
+                    Movement.StartMove();
+                }
+                
+
             }
             else if(CharacterHealth.GetHealthCount() == 0)
             {
+                // restart game
                 Movement.StartMove();
  
             }
@@ -82,14 +117,21 @@ public class FightAnimation : MonoBehaviour
         }
     }
 
-     private void ResetChoose()
+     private void WaitDie()
+    {
+        died = true;
+    }
+
+    private void ResetChoose()
     {
         readyToChoose = true;
+        textarena.Turn();
     }
 
     private IEnumerator PerformActionsWithDelay(CharacterHealth enemyHealth, CharacterHealth characterHealth, int enemyDamage, int characterDamage)
     {
         readyToChoose = false;
+        textarena.Turn();
         // First set of actions
         enemyHealth.TakeDamage(enemyDamage);
         Swarm08_Animator.SetTrigger("GetHit");
@@ -105,6 +147,9 @@ public class FightAnimation : MonoBehaviour
 
          }
 
-         Invoke(nameof(ResetChoose), Cooldown);
+        Invoke(nameof(ResetChoose), Cooldown1);
     }
+
+
+
 }

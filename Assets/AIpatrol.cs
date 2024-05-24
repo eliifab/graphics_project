@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class AIpatrol : MonoBehaviour
 {
-
+    private bool move;
     GameObject player;
     NavMeshAgent agent;
     [SerializeField] LayerMask groundLayer, playerLayer;
@@ -20,12 +20,17 @@ public class AIpatrol : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
+        move = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Patrol();
+        if(move)
+        {
+            Patrol();
+        }
+   
     }
 
     void Patrol()
@@ -46,5 +51,15 @@ public class AIpatrol : MonoBehaviour
         {
             WalkpointSet = true;
         }
+    }
+
+    public void SwitchMove(Transform trans)
+    {
+        move = !move;
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        agent.enabled = false;
+        gameObject.transform.position = trans.position;
+        agent.enabled = true;
     }
 }
