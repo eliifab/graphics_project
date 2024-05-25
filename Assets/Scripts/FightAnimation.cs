@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class FightAnimation : MonoBehaviour
 {
+    public Animator CharAnimator;
     public CameraSwitcher camswitch;
     public PlayerMovement Movement;
     private Animator Animator;
@@ -20,9 +21,10 @@ public class FightAnimation : MonoBehaviour
     private Vector3  saveEnemyTf;
     private bool readyToChoose = true;
     private float Cooldown1 = 2.0f;
-    private float Cooldown2 = 3.0f;
+    private float Cooldown2 = 4.0f;
     private bool died = false;
     private bool died2 = false;
+    private bool animation_done = true;
 
 
 
@@ -55,6 +57,7 @@ public class FightAnimation : MonoBehaviour
         }
         gameObject.transform.position = NewPositionEnemy.transform.position;
         gameObject.transform.LookAt(NewPositionCharacter.transform.position);
+        collision.gameObject.transform.LookAt(-NewPositionEnemy.transform.position);
         collision.gameObject.transform.position = NewPositionCharacter.transform.position;
         
     }
@@ -75,20 +78,23 @@ public class FightAnimation : MonoBehaviour
 
                 if(Input.GetKeyDown(KeyCode.U))
                 {
+                    animation_done = false;
                     StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(8, 12), EnemyStrength * Random.Range(8, 12))); // damage to enemy, damage to character
                 }
                 else if(Input.GetKeyDown(KeyCode.I))
                 {
+                    animation_done = false;
                     StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(5, 15), EnemyStrength * Random.Range(8, 12))); // damage to enemy, damage to character
                 }
                 else if(Input.GetKeyDown(KeyCode.O))
                 {
+                    animation_done = false;
                     StartCoroutine(PerformActionsWithDelay(EnemyHealth, CharacterHealth, CharacterStrength.GetStrengthCount()*Random.Range(1, 20), EnemyStrength * Random.Range(8, 12))); // damage to enemy, damage to character
                 }
 
             }
 
-            if(EnemyHealth.GetHealthCount() == 0)
+            if(EnemyHealth.GetHealthCount() == 0 && animation_done)
             {
 
                 if (!died) 
@@ -128,10 +134,19 @@ public class FightAnimation : MonoBehaviour
                 
 
             }
-            else if(CharacterHealth.GetHealthCount() == 0)
+            if(CharacterHealth.GetHealthCount() == 0 && animation_done)
             {
-                // restart game
-                Movement.StartMove();
+                if (!died) 
+                {
+                    if(!died2)
+                    {
+                        died2 = true;
+                        CharAnimator.SetTrigger("Die");
+                    }
+       
+                    //Invoke(nameof(WaitDie), Cooldown2);
+                }
+                
  
             }
            
@@ -155,6 +170,8 @@ public class FightAnimation : MonoBehaviour
         textarena.Turn();
         // First set of actions
         enemyHealth.TakeDamage(enemyDamage);
+        CharAnimator.SetTrigger("Attack2");
+        yield return new WaitForSeconds(0.2f);
         Animator.SetTrigger("GetHit");
 
         // Wait for 2 seconds
@@ -165,10 +182,14 @@ public class FightAnimation : MonoBehaviour
               // Second set of actions
             characterHealth.TakeDamage(characterDamage);
             Animator.SetTrigger("Attack");
+            yield return new WaitForSeconds(0.2f);
+            CharAnimator.SetTrigger("GetHit");
+
 
          }
 
         Invoke(nameof(ResetChoose), Cooldown1);
+        animation_done = true;
     }
 
 
