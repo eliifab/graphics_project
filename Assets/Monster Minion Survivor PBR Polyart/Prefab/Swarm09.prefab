@@ -232,14 +232,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59df44d209e20784d90bd0fa85031f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharAnimator: {fileID: 0}
   camswitch: {fileID: 0}
   Movement: {fileID: 0}
   Character: {fileID: 0}
-  AddStrengthAfterVictory: 3
-  EnemyStrength: 3
+  AddStrengthAfterVictory: 1
+  EnemyStrength: 1
   NewPositionEnemy: {fileID: 0}
   NewPositionCharacter: {fileID: 0}
   textarena: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!136 &2788550095849719634
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class CameraSwitcher : MonoBehaviour
 {
     public Camera[] cameras;
@@ -12,6 +13,7 @@ public class CameraSwitcher : MonoBehaviour
         for (int i = 0; i < cameras.Length; i++)
         {
             cameras[i].enabled = (i == currentCameraIndex);
+
         }
     }
 
@@ -25,6 +27,8 @@ public class CameraSwitcher : MonoBehaviour
 
         // Enable the next camera
         cameras[currentCameraIndex].enabled = true;
+
+        
     }
 
     public Camera GetCamera()
