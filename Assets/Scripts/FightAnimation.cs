@@ -47,6 +47,12 @@ public class FightAnimation : MonoBehaviour
         if (patrol != null) {
             patrol.SwitchMove(NewPositionEnemy.transform);
         }
+        else 
+        {
+            Animator.SetTrigger("Wake");
+            camswitch.SwitchCamera();
+
+        }
         gameObject.transform.position = NewPositionEnemy.transform.position;
         gameObject.transform.LookAt(NewPositionCharacter.transform.position);
         collision.gameObject.transform.position = NewPositionCharacter.transform.position;
@@ -59,6 +65,8 @@ public class FightAnimation : MonoBehaviour
         CharacterHealth EnemyHealth = gameObject.GetComponent<CharacterHealth>();
         CharacterHealth CharacterHealth = Character.GetComponent<CharacterHealth>();
         CharacterStrength CharacterStrength = Character.GetComponent<CharacterStrength>();
+        KeyCount KeyCount = Character.GetComponent<KeyCount>();
+
 
         if(Animator != null)
         {
@@ -101,6 +109,16 @@ public class FightAnimation : MonoBehaviour
 
 
                     camswitch.SwitchCamera();
+
+                    AIpatrol patrol = gameObject.GetComponent<AIpatrol>();
+
+                    if (patrol != null) {
+                          camswitch.SwitchCamera();
+
+                    }
+                    else {
+                        KeyCount.Collect(1);
+                    }
 
                
                     Character.gameObject.transform.position = saveCharTf;
