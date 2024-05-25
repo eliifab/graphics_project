@@ -21,7 +21,7 @@ public class AIpatrol : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("PlayerObj");
+        player = GameObject.Find("DogPBR");
         move = true;
     }
 
