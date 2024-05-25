@@ -9,7 +9,6 @@ public class FightAnimation : MonoBehaviour
     public Animator CharAnimator;
     public CameraSwitcher camswitch;
     public PlayerMovement Movement;
-    private Animator Animator;
     public GameObject Character;
     public int AddStrengthAfterVictory;
     public int EnemyStrength;
@@ -25,6 +24,7 @@ public class FightAnimation : MonoBehaviour
     private bool died = false;
     private bool died2 = false;
     private bool animation_done = true;
+    private Animator Animator;
 
 
 

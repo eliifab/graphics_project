@@ -17,7 +17,6 @@ public class KeyCount : MonoBehaviour
     {
         curCount = firstCount;
         CurrentCount.text = curCount.ToString() + "/3";
-
     }
 
 
@@ -25,7 +24,10 @@ public class KeyCount : MonoBehaviour
     {
         curCount += new_key;
         CurrentCount.text = curCount.ToString() + "/3";
+    }
 
-
+     public int Amount()
+    {
+       return curCount;
     }
 }
