@@ -44,6 +44,9 @@ public class FightAnimation : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        //tfstore = cam.transform;
+        //cam.enabled = false;
+        cam.SwitchMovement();
         vcam.Follow = null;
         vcam.LookAt = null;
         animchar.Switch();
@@ -139,6 +142,9 @@ public class FightAnimation : MonoBehaviour
                     Character.gameObject.transform.position = saveCharTf;
 
                     Movement.StartMove();
+                    cam.SwitchMovement();
+                    //cam.transform.position = tfstore.position;
+                    //cam.enabled = true;
                     animchar.Switch();
                     vcam.Follow = Character.transform;
                     vcam.LookAt = Character.transform;
