@@ -16,6 +16,7 @@ public class FightAnimation : MonoBehaviour
     public GameObject NewPositionCharacter;
     public TextArena textarena;
     public ThirdPersonCam cam;
+    private AnimCharacter animchar;
 
     private Vector3  saveCharTf;
     private Vector3  saveEnemyTf;
@@ -33,6 +34,7 @@ public class FightAnimation : MonoBehaviour
     void Start()
     {
         Animator = GetComponent<Animator>();
+        animchar = Character.GetComponent<AnimCharacter>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,7 @@ public class FightAnimation : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         cam.SwitchMovement();
+        animchar.Switch();
         saveCharTf = collision.gameObject.transform.position;
         saveEnemyTf = gameObject.transform.position;
 
@@ -133,6 +136,7 @@ public class FightAnimation : MonoBehaviour
 
                     Movement.StartMove();
                     cam.SwitchMovement();
+                    animchar.Switch();
                 }
                 
 
