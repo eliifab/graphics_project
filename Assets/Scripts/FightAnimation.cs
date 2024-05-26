@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 
 public class FightAnimation : MonoBehaviour
@@ -27,6 +28,8 @@ public class FightAnimation : MonoBehaviour
     private bool died2 = false;
     private bool animation_done = true;
     private Animator Animator;
+    private Transform tfstore;
+    private CinemachineFreeLook vcam;
 
 
 
@@ -35,13 +38,14 @@ public class FightAnimation : MonoBehaviour
     {
         Animator = GetComponent<Animator>();
         animchar = Character.GetComponent<AnimCharacter>();
+        vcam = cam.GetComponent<CinemachineFreeLook>();
     }
 
 
     private void OnTriggerEnter(Collider collision)
     {
-        
-        cam.SwitchMovement();
+        vcam.Follow = null;
+        vcam.LookAt = null;
         animchar.Switch();
         saveCharTf = collision.gameObject.transform.position;
         saveEnemyTf = gameObject.transform.position;
@@ -135,8 +139,9 @@ public class FightAnimation : MonoBehaviour
                     Character.gameObject.transform.position = saveCharTf;
 
                     Movement.StartMove();
-                    cam.SwitchMovement();
                     animchar.Switch();
+                    vcam.Follow = Character.transform;
+                    vcam.LookAt = Character.transform;
                 }
                 
 
@@ -181,11 +186,11 @@ public class FightAnimation : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         Animator.SetTrigger("GetHit");
 
-        // Wait for 2 seconds
-        yield return new WaitForSeconds(2);
 
          if ((enemyHealth.GetHealthCount() != 0))
          {
+             // Wait for 2 seconds
+            yield return new WaitForSeconds(2);
               // Second set of actions
             characterHealth.TakeDamage(characterDamage);
             Animator.SetTrigger("Attack");

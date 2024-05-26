@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19329,7 +19329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb445638e710824eaa648102c8c37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstStrength: 1
+  firstStrength: 100
   CurrentStrength: {fileID: 1543848621}
 --- !u!114 &1228322694
 MonoBehaviour:
@@ -19343,7 +19343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df005002512ece74097da82c1f4a48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 100
   healthbar: {fileID: 340281082}
   CurrentHealth: {fileID: 1713223160}
 --- !u!114 &1228322695
@@ -30189,7 +30189,7 @@ MonoBehaviour:
   m_UpdateMethod: 0
   m_BlendUpdateMethod: 0
   m_DefaultBlend:
-    m_Style: 1
+    m_Style: 4
     m_Time: 1
     m_CustomCurve:
       serializedVersion: 2

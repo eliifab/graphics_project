@@ -11,7 +11,6 @@ public class ThirdPersonCam : MonoBehaviour
     public Camera cam;
 
     public float rotationSpeed;
-    private bool use = true;
    
   
 
@@ -23,19 +22,15 @@ public class ThirdPersonCam : MonoBehaviour
 
     private void Update()
     {
-        if (use) {
+        
     
-            orientation.rotation = Quaternion.Euler(0, cam.transform.rotation.eulerAngles.y,0);
+        orientation.rotation = Quaternion.Euler(0, cam.transform.rotation.eulerAngles.y,0);
 
-            playerObj.forward = orientation.forward;
+        playerObj.forward = orientation.forward;
             
-        }
+        
         
     }
 
-    public void SwitchMovement()
-    {
-        use = !use;
-    }
 
 }
