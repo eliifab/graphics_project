@@ -37,10 +37,10 @@ public class FightAnimation : MonoBehaviour
         animchar = Character.GetComponent<AnimCharacter>();
     }
 
-    // Update is called once per frame
 
     private void OnTriggerEnter(Collider collision)
     {
+        
         cam.SwitchMovement();
         animchar.Switch();
         saveCharTf = collision.gameObject.transform.position;
@@ -62,8 +62,8 @@ public class FightAnimation : MonoBehaviour
         }
         gameObject.transform.position = NewPositionEnemy.transform.position;
         gameObject.transform.LookAt(NewPositionCharacter.transform.position);
-        collision.gameObject.transform.LookAt(-NewPositionEnemy.transform.position);
         collision.gameObject.transform.position = NewPositionCharacter.transform.position;
+        collision.gameObject.transform.LookAt(NewPositionEnemy.transform.position);
         
     }
     
