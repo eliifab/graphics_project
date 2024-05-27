@@ -44,8 +44,6 @@ public class FightAnimation : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        //tfstore = cam.transform;
-        //cam.enabled = false;
         cam.SwitchMovement();
         vcam.Follow = null;
         vcam.LookAt = null;
@@ -63,8 +61,8 @@ public class FightAnimation : MonoBehaviour
         }
         else 
         {
-            Animator.SetTrigger("Wake");
             camswitch.SwitchCamera();
+            Animator.SetTrigger("Wake");
 
         }
         gameObject.transform.position = NewPositionEnemy.transform.position;
@@ -143,8 +141,6 @@ public class FightAnimation : MonoBehaviour
 
                     Movement.StartMove();
                     cam.SwitchMovement();
-                    //cam.transform.position = tfstore.position;
-                    //cam.enabled = true;
                     animchar.Switch();
                     vcam.Follow = Character.transform;
                     vcam.LookAt = Character.transform;
@@ -162,7 +158,10 @@ public class FightAnimation : MonoBehaviour
                         CharAnimator.SetTrigger("Die");
                     }
                     
-                    //Invoke(nameof(WaitDie), Cooldown2);
+                    Invoke(nameof(WaitDie), Cooldown2);
+                }
+                else{
+                    SceneManager.LoadScene("Game Over");
                 }
                 
  

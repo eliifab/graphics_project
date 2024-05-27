@@ -19331,7 +19331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb445638e710824eaa648102c8c37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstStrength: 10
+  firstStrength: 1
   CurrentStrength: {fileID: 1543848621}
 --- !u!114 &1228322694
 MonoBehaviour:
@@ -19345,7 +19345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df005002512ece74097da82c1f4a48d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 1
   healthbar: {fileID: 340281082}
   CurrentHealth: {fileID: 1713223160}
 --- !u!114 &1228322695

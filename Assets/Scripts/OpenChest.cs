@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class OpenChest : MonoBehaviour
 {
     
     public KeyCount keycount;
     public TMP_Text ChestMessage;
+    private float Cooldown = 2.0f;
 
     private Animator Animator;
 
@@ -29,8 +32,14 @@ public class OpenChest : MonoBehaviour
 
         if (Input.GetKey(KeyCode.X)) {
             Animator.SetTrigger("Open");
+            Invoke(nameof(Winner), Cooldown);
         }
 
+    }
+
+    private void Winner()
+    {
+         SceneManager.LoadScene("Win");
     }
 
     private void OnTriggerExit(Collider collision)
