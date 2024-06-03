@@ -24,15 +24,15 @@ public class OpenChest : MonoBehaviour
         // output text depending on amount of keys 
         if (keycount.Amount() == 3) {
             ChestMessage.text = "Press x to open chest";
-        }
 
+            if (Input.GetKey(KeyCode.X))
+            {
+                Animator.SetTrigger("Open");
+                Invoke(nameof(Winner), Cooldown);
+            }
+        }
         else {
             ChestMessage.text = "Not enough keys";
-        }
-
-        if (Input.GetKey(KeyCode.X)) {
-            Animator.SetTrigger("Open");
-            Invoke(nameof(Winner), Cooldown);
         }
 
     }
